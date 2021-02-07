@@ -16,6 +16,7 @@ tokens = user_input.split()  # Split into separate strings
 # Convert strings to integers
 print()
 nums = []
+above_21 = []
 for pos, token in enumerate(tokens):
     nums.append(int(token))
     print('{}: {}'.format(pos, token))
@@ -28,4 +29,4 @@ for num in nums:
 
 print('Sum:', sum)
 print('Average:', sum // len(nums))
-print('Numbers greater than 21:', above_21, sep=' ')
+print('Numbers greater than 21:', above_21)
