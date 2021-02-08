@@ -1,3 +1,9 @@
+'''
+Stephe Morgan
+IT-140-X3215 - Introduction to Scripting - 21EW3
+'''
+
+
 import random as rm
 
 room_list = {
