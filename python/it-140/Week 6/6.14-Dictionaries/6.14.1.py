@@ -21,3 +21,4 @@ while True:  # Exit when user enters no input
         break
     else:
         print('Unrecognized command.')
+
