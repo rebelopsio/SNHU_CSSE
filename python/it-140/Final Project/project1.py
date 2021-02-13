@@ -8,7 +8,13 @@ import random as rm
 room_list = {
     1: {'Name': "Children's Room", 'Clue': 'Tattered brown cloth', 'South': 'Natural History Room', 'East': 'Agricultural Room'},
     2: {'Name': "Natural History Room", 'Clue': 'Black shoes', 'North': "Children's Room"},
-    3: {'Name': "Agricultural Room", 'West': "Children's Room"}
+    3: {'Name': "Agricultural Room", 'West': "Children's Room", 'South': 'African History Room', 'North': 'Science Room', 'East': 'Marginalized People Room'},
+    4: {'Name': "African History Room", 'East': "Medical Room", 'North': "Agricultural Room"},
+    5: {'Name': "Medical Room", 'West': "African History Room", 'Clue': 'Black tie'},
+    6: {'Name': 'Science Room', 'South': 'Agricultural Room', 'East': 'Military and War Room', 'Clue': 'Thick Framed Glasses'},
+    7: {'Name': 'Military and War Room', 'West': 'Science Room', 'Clue': 'Tattered blue cloth'},
+    8: {'Name': 'Marginalized People Room', 'West': 'Agricultrural Room', 'North': 'Art Room'},
+    9: {'Name': 'Art Room', 'South': 'Marginalized People Room', 'Clue': 'Brown Overcoat'}
 }
 
 
@@ -62,7 +68,7 @@ if __name__ == '__main__':
     items_collected = []
     rooms_available = {}
     current_room = 1
-    villain_room = rm.randint(1, 3)
+    villain_room = rm.randint(1, 9)
 
     # Main game loop
     while user_input.lower() != 'exit':
@@ -104,10 +110,10 @@ if __name__ == '__main__':
                     direction = new_slice[1].capitalize()
                     to_room = rooms_available[direction]
                     current_room = get_room_id(to_room)
-                    villain_room = rm.randint(1, 3)
+                    villain_room = rm.randint(1, 9)
 
             # If player has indicated 'exit', skip this
             if user_input.lower() != 'exit':
                 print('The Black Knight is in here! Run back to the beginning!')
                 current_room = 1
-                villain_room = rm.randint(1, 3)
+                villain_room = rm.randint(1, 9)
