@@ -1,5 +1,5 @@
 '''
-Stephe Morgan
+Stephen Morgan
 IT-140-X3215 - Introduction to Scripting - 21EW3
 '''
 
