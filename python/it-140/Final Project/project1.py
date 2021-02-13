@@ -5,6 +5,7 @@ IT-140-X3215 - Introduction to Scripting - 21EW3
 
 import random as rm
 
+
 room_list = {
     1: {'Name': "Children's Room", 'Clue': 'Tattered brown cloth', 'South': 'Natural History Room', 'East': 'Agricultural Room'},
     2: {'Name': "Natural History Room", 'Clue': 'Black shoes', 'North': "Children's Room"},
@@ -46,7 +47,7 @@ def get_rooms(room_id):
 
 def get_room_id(room_name):
     """
-    Function to return integer of room id 
+    Function to return integer of room id
     """
     for i in room_list:
         if room_list[i]['Name'] == room_name:
@@ -63,46 +64,94 @@ def available_directions(available_rooms):
     return l
 
 
-if __name__ == '__main__':
+def game_instructions():
+    """
+    Function to print the game instructions
+    """
+    print()
+    print()
+    print('Welcome to Scooby-Doo and the Black Knight!')
+    print('The members of the town have reported something creepy going on at the museum.')
+    print('Professor Jameson Hyde White has also been reported as missing.')
+    print('Scooby-Doo must figure out what is going on.\n')
+    print('Collect all of the clues to solve the mystery!\n')
+    print('Game instructions:')
+    print()
+    print('Move commands: go south, go north, go east, go west')
+    print('Pick up a clue: get clue')
+    print()
+
+
+def game_ending(current_room):
+    print('You have collected all of the clues.')
+    print("The Black Knight enters {} but doesn't see you!".format(
+        room_list[current_room]['Name']))
+    print("Scooby-Doo looks at the items collected, and scream out, 'THE BLACK KNIGHT IS....!")
+    print('Startled, the Black Knight loses their balance and they tumble over.')
+    print("The Black Knight's helmet rolls across the room, revealing their true identity.")
+    print("Scooby-Doo, finishing his sentence, exclaims, 'Mr. Wickles!'")
+    print("Just then, the gang enters with the Sheriff who arrests Mr. Wickles.\n")
+    print("Mr. Wickles admits to kidnapping Prof. White")
+    print("You find the Professor tied up in the closet and rescue him.")
+    print("Great job, Scooby-Doo!\n")
+    print()
+
+
+def main():
+    """
+    Main game function
+    """
     user_input = ''
     items_collected = []
     rooms_available = {}
     current_room = 1
-    villain_room = rm.randint(1, 9)
+    villain_room = rm.randint(2, 9)
 
     # Main game loop
     while user_input.lower() != 'exit':
-        print('Welcome to Scooby-Doo and the Black Knight!')
-        print('Collect all of the clues to solve the mystery!')
-        print('Move commands: go south, go north, go east, go west')
-        print('Pick up a clue: get clue')
 
         # Game loop while all clues are not collected
         while len(items_collected) < 6 and user_input.lower() != 'exit':
+            if user_input == '':
+                game_instructions()
 
             # Game loop when villain is not in the same room
             while villain_room != current_room:
-                print(
-                    "Scooby-Doo enters the {}".format(room_list[current_room]['Name']))
+
+                if user_input == '':
+                    print(
+                        "Scooby-Doo enters the museum to find himself in the {}".format(room_list[current_room]['Name']))
+                elif user_input.lower().strip() == 'get clue':
+                    print(
+                        "Scooby-Doo is still in the {}".format(room_list[current_room]['Name']))
+                else:
+                    print()
+                    print(
+                        "Scooby-Doo enters the {}".format(room_list[current_room]['Name']))
                 if (has_items(current_room)) != False:
-                    print("Look! A clue: {}".format(has_items(current_room)))
+                    if has_items(current_room) not in items_collected:
+                        print("Look! A clue: {}".format(
+                            has_items(current_room)))
                 rooms_available = get_rooms(current_room)
                 print('Current rooms available to move to: {}'.format(
                     rooms_available))
+                print('Scooby-Doo has collected: {}'.format(items_collected))
+                print('---------------------------------------------------\n')
                 user_input = input('What would you like to do?\n')
                 if user_input.lower() == 'exit':
                     break
                 new_slice = user_input.split()
-                while (new_slice[0] not in ['go', 'get']) or (len(new_slice) <= 1):
+                while (new_slice[0].lower() not in ['go', 'get']) or (len(new_slice) <= 1):
                     print('Invalid response.')
                     user_input = input('What would you like to do?\n')
                     if user_input.lower() == 'exit':
                         break
                     new_slice = user_input.split()
+
                 # validate that the go command was used
                 if new_slice[0].lower() == 'go':
                     while new_slice[1].capitalize() not in available_directions(rooms_available):
-                        print('Invalid response.')
+                        print('Invalid response.\n')
                         user_input = input('What would you like to do?\n')
                         if user_input.lower() == 'exit':
                             break
@@ -112,8 +161,40 @@ if __name__ == '__main__':
                     current_room = get_room_id(to_room)
                     villain_room = rm.randint(1, 9)
 
-            # If player has indicated 'exit', skip this
-            if user_input.lower() != 'exit':
-                print('The Black Knight is in here! Run back to the beginning!')
+                # validate that get was used
+                if new_slice[0].lower() == 'get':
+                    while new_slice[1].lower() != 'clue':
+                        print('Invalid response.\n')
+                        user_input = input('What would you like to do?\n')
+                        if user_input.lower() == 'exit':
+                            break
+                        new_slice = user_input.split()
+                    if (has_items(current_room)) != False:
+                        if has_items(current_room) not in items_collected:
+                            items_collected.append(has_items(current_room))
+                            print()
+                            print('You picked up the clue {}!\n'.format(
+                                has_items(current_room)))
+                        else:
+                            print('No clue available to collect!\n')
+                if len(items_collected) == 6:
+                    break
+
+            # What happens when the Black Knight appears
+            if user_input.lower() != 'exit' and len(items_collected) < 6:
+                print()
+                print('!!!!!!\n')
+                print('The Black Knight is in here! Run back to the beginning!\n')
+                print('!!!!!!')
+                print()
                 current_room = 1
                 villain_room = rm.randint(1, 9)
+
+        # Game ending
+        if len(items_collected) == 6:
+            game_ending(current_room)
+            break
+
+
+if __name__ == '__main__':
+    main()
