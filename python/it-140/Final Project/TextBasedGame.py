@@ -14,7 +14,7 @@ room_list = {
     5: {'Name': "Medical Room", 'West': "African History Room", 'Clue': 'Black tie'},
     6: {'Name': 'Science Room', 'South': 'Agricultural Room', 'East': 'Military and War Room', 'Clue': 'Thick Framed Glasses'},
     7: {'Name': 'Military and War Room', 'West': 'Science Room', 'Clue': 'Tattered blue cloth'},
-    8: {'Name': 'Marginalized People Room', 'West': 'Agricultrural Room', 'North': 'Art Room'},
+    8: {'Name': 'Marginalized People Room', 'West': 'Agricultural Room', 'North': 'Art Room'},
     9: {'Name': 'Art Room', 'South': 'Marginalized People Room', 'Clue': 'Brown Overcoat'}
 }
 
@@ -141,7 +141,7 @@ def main():
                 if user_input.lower() == 'exit':
                     break
                 new_slice = user_input.split()
-                while (new_slice[0].lower() not in ['go', 'get']) or (len(new_slice) <= 1):
+                while new_slice == [] or new_slice == [] or (new_slice[0].lower() not in ['go', 'get']) or (len(new_slice) <= 1):
                     print('Invalid response.')
                     user_input = input('What would you like to do?\n')
                     if user_input.lower() == 'exit':
@@ -150,7 +150,7 @@ def main():
 
                 # validate that the go command was used
                 if new_slice[0].lower() == 'go':
-                    while new_slice[1].capitalize() not in available_directions(rooms_available):
+                    while new_slice == [] or new_slice[1].capitalize() not in available_directions(rooms_available):
                         print('Invalid response.\n')
                         user_input = input('What would you like to do?\n')
                         if user_input.lower() == 'exit':
