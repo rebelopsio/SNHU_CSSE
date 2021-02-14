@@ -188,7 +188,7 @@ def main():
                 print('!!!!!!')
                 print()
                 current_room = 1
-                villain_room = rm.randint(1, 9)
+                villain_room = rm.randint(2, 9)
 
         # Game ending
         if len(items_collected) == 6:
