@@ -163,7 +163,7 @@ def main():
 
                 # validate that get was used
                 if new_slice[0].lower() == 'get':
-                    while new_slice[1].lower() != 'clue':
+                    while new_slice == [] or new_slice[1].lower() != 'clue':
                         print('Invalid response.\n')
                         user_input = input('What would you like to do?\n')
                         if user_input.lower() == 'exit':
