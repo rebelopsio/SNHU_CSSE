@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Driver {
     private static ArrayList<Dog> dogList = new ArrayList<Dog>();
     private static ArrayList<Monkey> monkeyList = new ArrayList<Monkey>();
+    private static ArrayList<String> speciesList = new ArrayList<String>();
     // Instance variables (if needed)
 
     public static void main(String[] args) {
@@ -13,7 +14,7 @@ public class Driver {
 
         // Add a loop that displays the menu, accepts the users input
         // and takes the appropriate action.
-        // For the project submission you must also include input validation
+        // For the project submission you must also include input validation4
         // and appropriate feedback to the user.
         // Hint: create a Scanner and pass it to the necessary
         // methods
@@ -42,11 +43,11 @@ public class Driver {
         } else if (input1 == 3) {
             reserveAnimal(scnr);
         } else if (input1 == 4) {
-            printAnimals();
+            printAnimals("dogs");
         } else if (input1 == 5) {
-            printAnimals();
+            printAnimals("monkeys");
         } else if (input1 == 6) {
-            printAnimals();
+            printAnimals("unreserved");
         }
 
     }
@@ -63,7 +64,7 @@ public class Driver {
         System.out.println("[6] Print a list of all animals that are not reserved");
         System.out.println("[q] Quit application");
         System.out.println();
-        System.out.println("Enter a menu selection");
+        // System.out.println("Enter a menu selection");
     }
 
     // Adds dogs to a list for testing
@@ -145,7 +146,7 @@ public class Driver {
                 return; // returns to menu
             }
         }
-        ArrayList<String> speciesList = new ArrayList<String>();
+
         speciesList.add("Capuchin");
         speciesList.add("Guenon");
         speciesList.add("Macaque");
@@ -191,7 +192,31 @@ public class Driver {
     // Complete reserveAnimal
     // You will need to find the animal by animal type and in service country
     public static void reserveAnimal(Scanner scanner) {
-        System.out.println("The method reserveAnimal needs to be implemented");
+        System.out.println("Enter the animal type");
+        String type = scanner.nextLine();
+        if (type.equals("Monkey") || type.equals("monkey")) {
+            System.out.println("Enter the Monkey's Country");
+            String country = scanner.nextLine();
+            for (Monkey obj : monkeyList) {
+                if (obj.getAcquisitionLocation().equals(country)) {
+                    obj.setReserved(true);
+                    return;
+                }
+            }
+            System.out.println("Sorry that Monkey is not in our list");
+        } else if (type.equals("Dog") || type.equals("dog")) {
+            System.out.println("Enter the Dog's Country");
+            String country = scanner.nextLine();
+            for (Dog obj : dogList) {
+                if (obj.getAcquisitionLocation().equals(country)) {
+                    obj.setReserved(true);
+                    return;
+                }
+
+            }
+            System.out.println("Sorry that Dog is not in our list");
+        } else
+            System.out.println("Type Not Found");
 
     }
 
@@ -209,8 +234,26 @@ public class Driver {
     // The other lists can have a print statement saying "This option needs to be
     // implemented".
     // To score "exemplary" you must correctly implement the "available" list.
-    public static void printAnimals() {
-        System.out.println("The method printAnimals needs to be implemented");
-
+    public static void printAnimals(String type) {
+        if (type == "dogs") {
+            for (Dog dog : dogList) {
+                System.out.println(dog.getName());
+            }
+        } else if (type == "monkeys") {
+            for (Monkey monkey : monkeyList) {
+                System.out.println(monkey.getName());
+            }
+        } else if (type == "unreserved") {
+            for (Dog dog : dogList) {
+                if (dog.getReserved() == false) {
+                    System.out.println(dog.getName());
+                }
+            }
+            for (Monkey monkey : monkeyList) {
+                if (monkey.getReserved() == false) {
+                    System.out.println(monkey.getName());
+                }
+            }
+        }
     }
 }
